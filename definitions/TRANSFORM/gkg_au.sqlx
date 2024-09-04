@@ -1,0 +1,29 @@
+config {
+    type: "incremental",
+    bigquery: {
+        partitionBy: "TIMESTAMP_TRUNC(partition_dt, DAY)"
+    },
+    schema: dataform.projectConfig.vars.CURATED_DATA,
+    tags: ["CURATE_DATA"]
+}
+
+WITH
+  all_locations_split AS (
+  SELECT
+    *,
+    SPLIT (locations, '#') AS location_lst
+  FROM
+    ${ref("gkg_local")} )
+SELECT
+  * except (location_lst)
+FROM
+  all_locations_split
+CROSS JOIN
+  UNNEST (location_lst) AS loc_element
+WHERE
+  loc_element = 'Australia'
+  ${
+      when(incremental(),
+          `AND partition_dt > (SELECT MAX(partition_dt) FROM ${self()})`
+      )
+  }

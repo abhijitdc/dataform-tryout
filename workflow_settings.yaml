@@ -5,4 +5,4 @@ defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.0
 vars:
     RAW_DATA: dataform_gkg_raw
-    TARGET_DATA: dataform_gkg_curated
+    CURATED_DATA: dataform_gkg_curated
