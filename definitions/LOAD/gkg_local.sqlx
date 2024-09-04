@@ -1,0 +1,35 @@
+config {
+    type: "incremental",
+    bigquery: {
+        partitionBy: "TIMESTAMP_TRUNC(partition_dt, DAY)"
+    },
+    schema: dataform.projectConfig.vars.RAW_DATA,
+    tags: ["LOAD_DATA"]
+}
+
+SELECT
+  GKGRECORDID,
+  DATE,
+  DocumentIdentifier,
+  Counts,
+  V2Counts,
+  Themes,
+  V2Themes,
+  Locations,
+  V2Locations,
+  Persons,
+  V2Persons,
+  Organizations,
+  V2Organizations,
+  V2Tone,
+  AllNames,
+  _PARTITIONTIME as partition_dt
+FROM
+  ${ref('gkg_partitioned')}
+WHERE
+  _PARTITIONTIME > '2024-09-01'
+  ${
+      when(incremental(),
+          `AND _PARTITIONTIME > (SELECT MAX(_PARTITIONTIME) FROM ${self()})`
+      )
+  }
