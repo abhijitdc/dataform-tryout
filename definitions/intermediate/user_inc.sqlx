@@ -1,0 +1,24 @@
+config {
+    type: "incremental",
+    bigquery: {
+        partitionBy: "TIMESTAMP_TRUNC(created_dt, DAY)"
+    },
+    schema: dataform.projectConfig.vars.RAW_DATA,
+    tags: ["LOAD_DATA"],
+    uniqueKey: ['name']
+}
+
+SELECT
+  name,
+  age,
+  address,
+  gender,
+  created_dt,
+  CURRENT_TIMESTAMP() as insert_dt
+FROM
+  ${ref('users')}
+  ${
+      when(incremental(),
+          `WHERE created_dt > (SELECT MAX(created_dt) FROM ${self()})`
+      )
+  }

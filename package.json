@@ -1,0 +1,7 @@
+{
+   "name": "local-repo",
+   "dependencies": {
+     "@dataform/core": "3.0.0-beta.4",
+     "dataform-scd": "https://github.com/dataform-co/dataform-scd/archive/refs/tags/0.5.tar.gz"
+   }
+ }

@@ -2,4 +2,6 @@ defaultProject: abhi-demobox
 defaultLocation: australia-southeast1
 defaultDataset: dataform_tryout
 defaultAssertionDataset: dataform_tryout_assertions
-dataformCoreVersion: 3.0.0-beta.4
+vars:
+    RAW_DATA: dataform_tryout
+    CURATED_DATA: dataform_tryout
