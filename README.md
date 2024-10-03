@@ -1,5 +1,5 @@
---
-title: Data Pipeline for Assessing BOM Weather and AIHW Hospitalization Correlation
+---
+Data Pipeline for Assessing BOM Weather and AIHW Hospitalization Correlation
 ---
 
 ## Data Pipeline for Assessing BOM Weather and AIHW Hospitalization Correlation
