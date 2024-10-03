@@ -9,7 +9,7 @@ config {
 SELECT
   Week_start_date AS Week_start_date_raw,
   CAST(Week_start_date AS DATE FORMAT 'DDMONYYYY') AS Week_start_date,
-  Jurisdiction,
+  UPPER(Jurisdiction) as Jurisdiction ,
   SA4_code,
   SA4_name,
   Condition_group,

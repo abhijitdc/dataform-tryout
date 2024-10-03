@@ -1,21 +1,28 @@
 config {
     type: "table",
-    tags: ["CURATE"]
+    tags: ["CURATE"],
+    assertions: {
+        nonNull: ["weekly_avg_max_temp"]
+    }
 }
 
 WITH
   weekly_max_avg AS (
   SELECT
+    station_name,
     station_num,
+    year,
     EXTRACT(WEEK
     FROM
       CAST(CONCAT(day,'-',month,'-',year) AS DATE FORMAT 'DD-MM-YYYY')) AS week_number,
-    AVG(CAST(max_temp AS FLOAT64)) OVER (PARTITION BY station_num, EXTRACT(WEEK FROM CAST(CONCAT(day,'-',month,'-',year) AS DATE FORMAT 'DD-MM-YYYY')) ROWS BETWEEN UNBOUNDED PRECEDING
+    AVG(CAST(max_temp AS FLOAT64)) OVER (PARTITION BY station_num, year, EXTRACT(WEEK FROM CAST(CONCAT(day,'-',month,'-',year) AS DATE FORMAT 'DD-MM-YYYY')) ROWS BETWEEN UNBOUNDED PRECEDING
       AND UNBOUNDED FOLLOWING ) AS weekly_avg_max_temp
   FROM
     ${ref('bom_weather_STAGING')} )
 SELECT
+  station_name,
   station_num,
+  year,
   week_number,
   weekly_avg_max_temp
 FROM
@@ -23,4 +30,6 @@ FROM
 GROUP BY
   1,
   2,
-  3
+  3,
+  4,
+  5

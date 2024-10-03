@@ -11,15 +11,15 @@ WITH
   FROM (
     SELECT
       "066062" AS station_no,
-      "Sydney - Observatory Hill" AS station_name
+      "NSW" AS station_name
     UNION ALL
     SELECT
       "040913" AS station_no,
-      "Brisbane" AS station_name
+      "QLD" AS station_name
     UNION ALL
     SELECT
       "086338" AS station_no,
-      "Melbourne - Olympic Park" AS station_name ) )
+      "VIC" AS station_name ) )
 SELECT
   * EXCEPT (station_no)
 FROM

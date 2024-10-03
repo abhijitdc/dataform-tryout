@@ -1,0 +1,22 @@
+config {
+    type: "table",
+    tags: ["CURATE"]
+}
+
+SELECT
+  Week_start_date,
+  EXTRACT(YEAR FROM Week_start_date) as year,
+  EXTRACT(WEEK FROM Week_start_date) as week_number,
+  Jurisdiction,
+  SA4_code,
+  SA4_name,
+  Condition_group,
+  Count,
+  Crud_rate,
+  Updated_at,
+  SUM(`Count`) OVER(PARTITION BY Jurisdiction, EXTRACT(YEAR FROM week_start_date),
+    EXTRACT(WEEK
+    FROM
+      week_start_date) ) AS weekly_count
+FROM
+  ${ref('hospitalisations_STAGING')}

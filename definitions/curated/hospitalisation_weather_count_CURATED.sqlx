@@ -1,0 +1,17 @@
+config {
+    type: "table",
+    tags: ["CURATE"]
+}
+
+SELECT
+  *
+FROM
+  ${ref('hospitalisations_counts_CURATED')}
+INNER JOIN
+  ${ref('weekly_station_avg_max_temp_CURATED')}
+ON
+  ${ref('hospitalisations_counts_CURATED')}.Jurisdiction = ${ref('weekly_station_avg_max_temp_CURATED')}.station_name
+  AND
+  ${ref('hospitalisations_counts_CURATED')}.year = ${ref('weekly_station_avg_max_temp_CURATED')}.year
+  AND
+  ${ref('hospitalisations_counts_CURATED')}.week_number = ${ref('weekly_station_avg_max_temp_CURATED')}.week_number
