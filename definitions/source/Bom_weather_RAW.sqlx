@@ -1,0 +1,6 @@
+config {
+    type: "declaration",
+    database: "abhi-demobox",
+    schema: "dataform_aihw_raw",
+    name: "Bom_weather_RAW",
+}

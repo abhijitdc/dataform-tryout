@@ -1,0 +1,22 @@
+config {
+    type: "table",
+    tags: ["STAGE"],
+    assertions: {
+        nonNull: ["Week_start_date", "Crud_rate"]
+    }
+}
+
+SELECT
+  Week_start_date AS Week_start_date_raw,
+  CAST(Week_start_date AS DATE FORMAT 'DDMONYYYY') AS Week_start_date,
+  UPPER(Jurisdiction) as Jurisdiction ,
+  SA4_code,
+  SA4_name,
+  Condition_group,
+  `Count` AS Count_raw,
+  SAFE_CAST(`Count` AS INTEGER) AS `Count`,
+  Crude_rate AS Crude_rate_raw,
+  SAFE_CAST(Crude_rate AS FLOAT64) AS Crud_rate,
+  CURRENT_TIMESTAMP() AS Updated_at
+FROM
+  ${ref('Hospitalisations_RAW')}
