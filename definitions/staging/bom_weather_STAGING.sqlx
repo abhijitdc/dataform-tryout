@@ -1,0 +1,30 @@
+config {
+    type: "view",
+    tags: ["STAGE"],
+}
+
+WITH
+  bom_stations AS (
+  SELECT
+    station_name,
+    station_no
+  FROM (
+    SELECT
+      "066062" AS station_no,
+      "Sydney - Observatory Hill" AS station_name
+    UNION ALL
+    SELECT
+      "040913" AS station_no,
+      "Brisbane" AS station_name
+    UNION ALL
+    SELECT
+      "086338" AS station_no,
+      "Melbourne - Olympic Park" AS station_name ) )
+SELECT
+  * EXCEPT (station_no)
+FROM
+  bom_stations
+INNER JOIN
+  ${ref('Bom_weather_RAW')}
+ON
+  bom_stations.station_no= ${ref('Bom_weather_RAW')}.station_num
